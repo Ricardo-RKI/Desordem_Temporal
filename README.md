@@ -9,7 +9,8 @@ Trello:
 <br> 
 Progresso da Homepage: 
 <img width="1920" height="903" alt="home_temporalis1" src="https://github.com/user-attachments/assets/1f8eb8aa-1b21-47eb-9035-7dcd6e300497" />
-<img width="1920" height="888" alt="home_temporalis2" src="https://github.com/user-attachments/assets/55b3aac9-46b0-4b4a-84a5-97624a6d42ba" />
+<img width="1917" height="884" alt="Captura de Tela (121)" src="https://github.com/user-attachments/assets/9d3e05d9-a944-4476-bad6-2620d79024b7" />
+
 
 
 
