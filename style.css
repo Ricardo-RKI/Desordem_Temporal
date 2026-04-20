@@ -94,7 +94,7 @@ main {
     justify-content: space-between;
     align-items: flex-start; 
     background-color: #1E1B2E;
-    border-bottom: solid #6D28D9 2px;
+   
     padding: 80px 160px;
     gap: 60px; 
 }
@@ -135,4 +135,47 @@ main {
     width: 80px;
     height: auto; 
     vertical-align: middle;
+}
+.ferramentas {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1E1B2E;
+    border-bottom: solid #6D28D9 2px;
+    gap: 20px;
+    padding: 30px 50px; 
+}
+.titulo_ferramentas {
+    font-size: 32px;
+    font-weight: bold;
+}
+.cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 80px;
+}
+
+.img_ferramentas {
+    width: 80px;
+    height: 80px; 
+    margin-bottom: 20px;
+
+}
+
+.card_ferramenta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3D375E;
+    border-radius: 4px;
+    height: 400px;
+    width: 300px;
+    padding: 30px;
+}
+
+.texto_card {
+    text-align: center;
 }
