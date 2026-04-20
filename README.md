@@ -1,2 +1,3 @@
 # Desordem_Temporal
-Um projeto pessoal com base no sistema de RPG que estou fazendo!
+Criando um site para gerenciar fichas e organizar campanhas do Desordem Temporal. 
+
