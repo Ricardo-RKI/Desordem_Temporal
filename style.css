@@ -20,7 +20,7 @@ ul {
     list-style: none;
 }
 
-nav {
+.nav {
     background-color: #1E1B2E;
     border-bottom: solid #3D375E 2px;
     max-width: 100%;
