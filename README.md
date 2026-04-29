@@ -7,7 +7,7 @@ Em Desenvolvimento.
 Sendo Desenvolvido por Ricardo Kazuo Inoue.
 
 <center> Tecnologias Utilizadas
-  <img width="512" height="512" alt="html" src="https://github.com/user-attachments/assets/b885ac6e-fe55-44c6-a226-018f89c49033" />
+  <img width="200" height="200" alt="html" src="https://github.com/user-attachments/assets/b885ac6e-fe55-44c6-a226-018f89c49033" />
  
 </center>
 
