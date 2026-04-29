@@ -28,7 +28,7 @@
        <p> Crie uma Senha: </p>
        <input type="password" id="ipt_senha" oninput="senha_valida()">
        <div id = div_senha> 
-        <span style = "color: red"> A Senha ter deve no Mínimo de 8 Caracteres</span>
+        <span style = "color: red"> A Senha deve incluir no Mínimo de 8 Caracteres</span>
         <br>
         <span style = "color: red"> A Senha deve incluir pelo menos uma letra maiúscula </span>
         <br>
@@ -59,10 +59,10 @@ let email_valido = false;
         let texto_validacao = "";
 
         
-        texto_validacao += `<span style="color:${tamanho ? 'green' : 'red'}"> A Senha ter deve no Mínimo de 8 Caracteres</span> <br>`;
-        texto_validacao += `<span style="color:${tem_maiuscula ? 'green' : 'red'}"> A Senha ter deve incluir pelo menos uma letra maiuscula</span> <br>`;
-        texto_validacao += `<span style="color:${tem_numero ? 'green' : 'red'}"> A Senha ter deve incluir pelo menos um numero</span> <br>`;
-        texto_validacao += `<span style="color:${tem_especial ? 'green' : 'red'}"> A Senha ter deve incluir pelo menos um caractere especial</span> <br>`;
+        texto_validacao += `<span style="color:${tamanho ? 'green' : 'red'}"> A Senha deve incluir no Mínimo de 8 Caracteres</span> <br>`;
+        texto_validacao += `<span style="color:${tem_maiuscula ? 'green' : 'red'}"> A Senha deve incluir pelo menos uma letra maiuscula</span> <br>`;
+        texto_validacao += `<span style="color:${tem_numero ? 'green' : 'red'}"> A Senha deve incluir pelo menos um numero</span> <br>`;
+        texto_validacao += `<span style="color:${tem_especial ? 'green' : 'red'}"> A Senha deve incluir pelo menos um caractere especial</span> <br>`;
        
         if (tamanho && tem_numero && tem_maiuscula && tem_especial) {
             senha_forte = true;
