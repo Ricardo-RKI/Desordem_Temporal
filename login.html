@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "style.css"> 
+    <link rel="icon" type="image/png" href="/public/assets/img/flavicontemporalis.png">
     <title>Login</title>
 </head>
 <body>
@@ -21,11 +22,11 @@
     <div class = "card_cadastro"> 
        <h1> Bem-vindo de Volta!. Faça o seu Login e Tenha acesso ao seu Temporalis! </h1>
 
-       <p> Nome do Usuário: </p>
-       <input type="text" id="ipt_usuario">
+       <p> Coloque o seu email: </p>
+       <input type="text" id="email_input">
 
        <p> Digite sua Senha: </p>
-       <input type="password" id="ipt_senha">
+       <input type="password" id="senha_input">
 
        <p> Esqueceu a Senha? <a href = "#"> Recupere Aqui </a></p>
 
@@ -37,13 +38,81 @@
         <p> Temporalis @2026 </p>
     </footer>
 </body>
-
+<script src = "js/sessao.js"> </script>
 <script>
+        function entrar() {
+        aguardar();
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            alert("Algum Campo em Branco!");
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+                    //sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+
+                    setTimeout(function () {
+                        window.location = "./dashboard/dashboard.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
 let senha_forte = false;
 
     function login() {
-        let nome = ipt_usuario.value;
-        let senha = ipt_senha.value;
+        let email = email_input.value;
+        let senha = senha_input.value;
         let tamanho = senha.length >= 8;
         let tem_numero = /([0-9])/.test(senha);
         let tem_maiuscula = /([A-Z])/.test(senha);
@@ -53,8 +122,8 @@ let senha_forte = false;
             senha_forte = true;
         }
         
-        if (nome == "") {
-            alert("Insira o Nome do Usuário!")
+        if (email == "") {
+            alert("Insira o email do Usuário!")
             return;
         }
 
@@ -62,9 +131,9 @@ let senha_forte = false;
             alert("A senha é fraca! Coloque a senha Corretamente");
         }
 
-        if ( nome != "" && senha_forte) {
+        if ( email != "" && senha_forte) {
             alert("Login Realizado com Sucesso!")
-            window.location.href = "dashboard.html"
+            window.location.href = "/public/dashboard/dashboard.html"
         }
 
     }

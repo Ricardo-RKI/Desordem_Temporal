@@ -3,6 +3,8 @@
 * {
     margin: 0;
     padding: 0;
+    text-decoration: none;
+    transition:  0.2s linear;
     box-sizing: border-box;
 }
 
@@ -30,6 +32,7 @@ ul {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    
 }
 .nav .titulo img {
     width: 20%;
@@ -37,13 +40,31 @@ ul {
 .nav .titulo_cadastro img {
     width: 10%;
 }
-.links {
+
+.nav .links {
     display: flex;
     flex-direction: row;
-    font-weight: bold;
-    gap: 32px;
-    color: #EAECFB;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    gap: 50px;
 }
+.nav a:hover {
+    color:#6D28D9;
+    border-bottom: solid #6D28D9 2px;
+}
+
+.login_link {
+    background-color: #5B21B6;
+    padding: 18px;
+    border-radius: 8px;
+}
+
+.nav .links a {
+    color: whitesmoke;
+    font-weight: bold;
+}
+
 
 main {
     display: flex;
@@ -102,6 +123,12 @@ main {
     gap: 10px;
     max-width: 600px; 
 }
+.texto_sobre{
+    font-size: 18px;
+}
+.texto_sistema_regras p{
+    font-size: 14px;
+}
 .card_regras {
     background-color:#252131;
     border: solid #3D375E 2px;
@@ -115,6 +142,16 @@ main {
     height: 40px; 
     vertical-align: middle;
     
+}
+.links_imagens_cards a{
+    text-decoration: none;
+     color: #EAECFB;
+     cursor:pointer;
+}
+
+.links_imagens_cards a:hover {
+    color:#6D28D9;
+    border-bottom: solid #6D28D9 2px;
 }
 
 .sobre h2, .sobre h3 {
@@ -147,6 +184,22 @@ main {
     font-size: 32px;
     font-weight: bold;
 }
+.ferramentas p {
+  font-size: 16px;
+}
+.cadastro_link {
+    color: whitesmoke;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 20px;
+    background-color: #5B21B6;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.cadastro_link a:hover{
+ border-bottom: solid whitesmoke 2px;
+}
+
 .cards {
     display: flex;
     flex-direction: row;
@@ -173,27 +226,62 @@ main {
     padding: 30px;
 }
 
+
 .texto_card {
     text-align: center;
+}
+
+
+.FAQ {
+    padding: 60px 160px;
+    background-color: #050614;
 }
 .FAQ {
     padding: 60px 160px;
     background-color: #050614;
 }
+
 .FAQ img {
     width: 80px;
-    height: auto; 
     vertical-align: middle;
 }
+
 .FAQ h1 {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+}
+
+.faq-bloco {
+    margin-bottom: 50px;
 }
 
 .FAQ h2 {
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: aquamarine;
+    position: relative;
+}
+
+
+.FAQ h2::after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-top: 10px;
+    background: linear-gradient(to right, transparent, aquamarine, transparent);
+}
+
+.faq-item {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+
+.faq-item::after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-top: 20px;
+    background: linear-gradient(to right, transparent, #6D28D9, transparent);
 }
 
 .FAQ h4 {
@@ -203,6 +291,7 @@ main {
     cursor: pointer;
     transition: 0.2s;
     border: 1px solid #3D375E;
+    margin-bottom: 0;
 }
 
 .FAQ h4:hover {
@@ -214,16 +303,8 @@ main {
     padding: 15px;
     border-left: 3px solid #6D28D9;
     border-radius: 0 0 6px 6px;
-    margin-bottom: 20px;
+    margin-top: 0;
     line-height: 1.6;
-}
-
-
-.FAQ hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #6D28D9, transparent);
-    margin: 20px 0;
 }
 
 
@@ -297,15 +378,30 @@ main {
   left: 0;
   padding: 20px; 
 }
-
-.lista_dash {
+.sidebar h2 {
+  padding: 15px;
+}
+.sidebar h3 {
+  padding: 16px;
+}
+.links_dash {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 42px;
+}
+.links_dash a {
     text-decoration: none;
     font-weight: bold;
-    padding: 10px;
+    color: #EAECFB;
+    padding: 5px;
 }
-.lista_dash a {
-    text-decoration: none;
+
+.links_dash a:hover {
+   border-bottom: solid #EAECFB 2px;
 }
+
 
 
 
