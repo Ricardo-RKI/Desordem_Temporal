@@ -49,7 +49,8 @@ body {
     gap: 20px;
 }
 .links_dash a:hover {
-   border-bottom: solid #EAECFB 2px;
+   border-left: solid #EAECFB 2px;
+    transform:translateX(5px);
 }
 
 .conteudo_dash {

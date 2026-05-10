@@ -90,7 +90,7 @@
                         <div class="cards_gerais" id="cards">
                             <div class="card_dados">
                                 <div class="resultado_rolagens" id="resultado_rolagem" style="text-align: center;">
-                                    Resultado das rolagens </div>
+                                    Resultado dos Dados </div>
                             </div>
                             <div class="card_dados">
                                 <div class="resultado_modificador" id="resultado_modif" style="text-align: center;">
@@ -120,6 +120,7 @@
                 let sucesso_ou_fracasso = [];
 
                 function rolagem() {
+                    let id_user = sessionStorage.ID_USUARIO;
                     let rolagens_adicionais = [];
 
 
@@ -140,7 +141,7 @@
                     let rolagens_feitas;
                     let vantagem;
                     let imagem;
-
+                    
 
                     let selec_rolagem = rolagens_de_dados.value;
                     let selec_teste = teste_select.value;
@@ -332,7 +333,49 @@
                     console.log(historico_rolagens)
                     console.log(sucesso_ou_fracasso);
 
-                }
+                    // Enviando o valor da nova input
+    fetch("/dados/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        tipoServer: selec_rolagem,
+        resultServer: resultado,
+        idUserServer : id_user,
+        //senhaServer: senhaVar,
+        //idEmpresaVincularServer: idEmpresaVincular
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+        
+
+          setTimeout(() => {
+            console.log("Inseri os Dados no Banco");
+          }, "2000");
+
+         // limparFormulario();
+          // finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        //finalizarAguardar();
+      });
+
+    return false;
+  }
+
+                
 
 
                 function historico() {
@@ -347,7 +390,7 @@
                         let fracasso_sucesso = texto == "Sucesso" ? `<span style="color:green"> Sucesso </span> ` : `<span style= "color: red"> Fracasso </span> `
 
 
-                        historico += ` <br> ${valor} : ${fracasso_sucesso}  <br>`
+                        historico += ` Resultado  = ${valor} : ${fracasso_sucesso}  <br>`
                     })
                     titulo_historico.innerHTML = `<span> Histórico das últimas 10 rolagens (De cima para baixo, do mais antigo ao mais atual): </span>`
                     historico_dados.innerHTML = historico;

@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 
+     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" type="image/png" href="/public/assets/img/flavicontemporalis.png">
     <link rel="stylesheet" href="./../css/dashboard.css">
 </head>
 
-<body onload="saudacao()">
+<body onload="// saudacao(), //validarSessao(), listar()">
     <div class = "layout"> 
     <div class="sidebar">
         <h2> Temporalis </h2>
@@ -60,7 +61,7 @@
             <div class = "card"> 
                 <h3> Total de Rolagens</h3>  
                 
-                <span  class = "span_numero">  0 </span>
+                <span  class = "span_numero"> <span id = "rolagens_totais"> 0 </span> </span>
                 <span class = "card_atualizar">  0 Rolagens foram feitas hoje. </span>
             </div>
         </div>
@@ -110,7 +111,8 @@
   <script>
      b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-    
+     
+
      let horas = new Date().getHours();
      let boa;
 
@@ -123,4 +125,28 @@
      }
     
      b_boa.innerHTML = boa;
+    
+
+
+    function listar() {
+    fetch("/dados/listar", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((dados) => {
+          dados.forEach((rolagens) => {
+            //listaEmpresasCadastradas.push(empresa);
+            rolagens_totais.innerHTML = rolagens.total_rolagens;
+            console.log("deu certo;")
+          });
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
   </script>
