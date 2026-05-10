@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,32 +8,119 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" type="image/png" href="/public/assets/img/flavicontemporalis.png">
-    <link rel ="stylesheet" href = "/public/style.css"> 
+    <link rel="stylesheet" href="./../css/dashboard.css">
 </head>
-<body>
-    <div class = "sidebar"> 
-    <h2> Temporalis </h2>
-    <h3> Olá Usuário, Seja Bem-Vindo de volta!</h3>
 
-        
+<body onload="saudacao()">
+    <div class = "layout"> 
+    <div class="sidebar">
+        <h2> Temporalis </h2>
+        <div class="links_dash">
+            <a href="dashboard.html"> Estatísticas Gerais </a>
 
-            <div class = "links_dash">
-             <a href = "dashboard.html"> Estatísticas Gerais </a> 
-            
 
-             <a href="personagens.html"> Suas Fichas </a> 
-            
-            
-             <a href = "campanhas.html"> Suas Campanhas </a> 
-            
-            
-             <a href= "dados.html"> Rolagens de Dados </a> 
-            
+            <a href="personagens.html"> Suas Fichas </a>
 
-          <a href = "#"> Sair </a> 
-            </div>
 
-     
+            <a href="campanhas.html"> Suas Campanhas </a>
+
+
+            <a href="dados.html"> Rolagens de Dados </a>
+
+
+            <a class="Sair" href="#"> Sair </a>
+        </div>
     </div>
 
-</script>
+    <main>
+        <div class=conteudo_dash>
+            <div class="usuario">
+                <div> 
+                <h2> <span id = "b_boa"> Boa Tarde </span> <span id = "b_usuario"> Usuário! </span> </h2>
+                <span> Bem-Vindo ao Temporalis. Você está logado neste email. </span>
+                </div>
+            </div>
+        
+
+        <div class = "cards_gerais"> 
+            <div class = "card"> 
+                <h3> Fichas Totais 
+                </h3>
+                <span  class = "span_numero">  0 </span>
+                <span class = "card_atualizar">  0 Fichas foram adicionadas hoje. </span>
+                
+                </div>
+           
+            <div class = "card"> 
+                <h3> Campanhas Totais 
+                </h3>
+                <span class = "span_numero">  0 </span>
+                <span class = "card_atualizar">  0 Campanhas foram adicionadas hoje. </span>
+            </div>
+            <div class = "card"> 
+                <h3> Total de Rolagens</h3>  
+                
+                <span  class = "span_numero">  0 </span>
+                <span class = "card_atualizar">  0 Rolagens foram feitas hoje. </span>
+            </div>
+        </div>
+        
+             <h2 class="subtitulo"> Suas Metas de Progresso </h2>
+
+    <div class="metas">
+
+        <div class="card_meta">
+            <div class="meta_topo">
+                <h3> Sessões na Semana </h3>
+                <span>0 / 5</span>
+            </div>
+
+            <div class="barra_progresso">
+                <div class="progresso" style="width: 60%;"></div>
+            </div>
+        </div>
+
+        <div class="card_meta">
+            <div class="meta_topo">
+                <h3> Criar Personagens </h3>
+                <span>0 / 4</span>
+            </div>
+
+            <div class="barra_progresso">
+                <div class="progresso" style="width: 50%;"></div>
+            </div>
+        </div>
+
+        <div class="card_meta">
+            <div class="meta_topo">
+                <h3> Atualizar Campanha </h3>
+                <span>0 / 3</span>
+            </div>
+
+            <div class="barra_progresso">
+                <div class="progresso" style="width: 33%;"></div>
+            </div>
+        </div>
+
+    </div>
+
+     </div>
+    </main>
+    </div>
+  <script>
+     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+    
+     let horas = new Date().getHours();
+     let boa;
+
+     if (horas < 12) {
+        boa = "Bom Dia,"
+     } else if (horas < 18) {
+         boa = "Boa Tarde,"
+     } else {
+        boa = "Boa Noite,"
+     }
+    
+     b_boa.innerHTML = boa;
+  </script>

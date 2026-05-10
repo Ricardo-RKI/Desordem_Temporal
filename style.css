@@ -369,41 +369,6 @@ main {
     transform: scale(1.02);
 }
 
-.sidebar {
-  background-color: #5B21B6;
-  width: 250px;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px; 
-}
-.sidebar h2 {
-  padding: 15px;
-}
-.sidebar h3 {
-  padding: 16px;
-}
-.links_dash {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 42px;
-}
-.links_dash a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #EAECFB;
-    padding: 5px;
-}
-
-.links_dash a:hover {
-   border-bottom: solid #EAECFB 2px;
-}
-
-
-
 
 footer {
     text-align: center;

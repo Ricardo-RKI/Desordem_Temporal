@@ -31,7 +31,7 @@
        <p> Esqueceu a Senha? <a href = "#"> Recupere Aqui </a></p>
 
 
-        <button onclick = "login()"> Realizar Login </button>
+        <button onclick = "entrar()"> Realizar Login </button>
 
     </div>
     <footer> 
@@ -72,7 +72,7 @@
 
             if (resposta.ok) {
                 console.log(resposta);
-
+                console.log("caiu no if")
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
@@ -105,7 +105,7 @@
     }
 
     function sumirMensagem() {
-        cardErro.style.display = "none"
+        //cardErro.style.display = "none"
     }
 
 let senha_forte = false;

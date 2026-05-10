@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolagens de Dados</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/png" href="/public/assets/img/flavicontemporalis.png">
+    <link rel="stylesheet" href="./../css/dashboard.css"">
+</head>
+
+<body>
+    <div class="layout">
+        <div class="sidebar">
+            <h2> Temporalis </h2>
+            <div class="links_dash">
+                <a href="dashboard.html"> Estatísticas Gerais </a>
+
+
+                <a href="personagens.html"> Suas Fichas </a>
+
+
+                <a href="campanhas.html"> Suas Campanhas </a>
+
+
+                <a href="dados.html"> Rolagens de Dados </a>
+
+
+                <a class="Sair" href="#"> Sair </a>
+            </div>
+        </div>
+
+        <main>
+            <div class=conteudo_dash>
+                <div class="usuario">
+                    <div class="texto_usuario">
+                        <h1> Rolagens de Dados </h1>
+                        <span> Aqui você pode realizar testes e obter os resultados dos dados de forma personalizada.
+                        </span>
+                    </div>
+
+                    <img src="/public/assets/img/Temporalis_dados.png">
+
+                </div>
+
+                <div class="dados_e_resultados">
+                    <div class="div_dados">
+                        <p> Selecione o tipo de dado a ser rolado: </p>
+                        <select name="Rolagens" id="rolagens_de_dados">
+                            <option value="d20"> D20 </option>
+                            <option value="d12"> D12 </option>
+                            <option value="d8"> D8 </option>
+                            <option value="d6"> D6 </option>
+                            <option value="d4"> D4 </option>
+                        </select>
+
+                        <p> Selecione a Característica do teste: </p>
+                        <select name="tipo_teste" id="teste_select">
+                            <option value="padrao"> Padrão </option>
+                            <option value="vantagem_dado"> Vantagem </option>
+                            <option value="desvantagem_dado"> Desvantagem </option>
+                            <option value="soma_dado"> Soma </option>
+                        </select>
+
+                        <p> Quantos dados serão rolados: </p>
+                        <input type="number" id="qtd_dados" placeholder="1">
+                        <div id="erro_qtd_dados"> </div>
+
+
+                        <p> Insira o número modificador do teste: </p>
+                        <input type="number" id="modificador" placeholder="Números Positivos ou Negativos">
+
+                        <p> Insira a dificuldade do teste: </p>
+                        <input type="text" id="dificuldade" placeholder="Números positivos ou Nulo">
+                        <div id="erro_dificuldade"> </div>
+
+                        <button onclick="rolagem()"> Realizar Rolagem </button>
+                        <div id="erro_teste"> </div>
+                        <button onclick="historico()"> Ver Últimos 10 Resultados </button>
+
+
+
+                    </div>
+
+
+
+                    <div class="resultados">
+                        <div class="cards_gerais" id="cards">
+                            <div class="card_dados">
+                                <div class="resultado_rolagens" id="resultado_rolagem" style="text-align: center;">
+                                    Resultado das rolagens </div>
+                            </div>
+                            <div class="card_dados">
+                                <div class="resultado_modificador" id="resultado_modif" style="text-align: center;">
+                                    Valor do Modificador </div>
+                            </div>
+                            <div class="card_dados">
+                                <div class="resultado_dificuldade" id="resultado_dif" style="text-align: center;">
+                                    Dificuldade do Teste </div>
+                            </div>
+                        </div>
+                        <div class="card_resultado_final">
+                            <div class="resultado_final" id="div_resultado"
+                                style="text-align: center; font-size: 32px;"> Resultados Finais </div>
+                            <div id="titulo_historico" style="font-size: 20px; text-align: center;"> </div>
+                            <div id="historico_dados" style="font-size: 14px; text-align: center;"> </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <script>
+                let historico_rolagens = [];
+                let sucesso_ou_fracasso = [];
+
+                function rolagem() {
+                    let rolagens_adicionais = [];
+
+
+                    erro_qtd_dados.innerHTML = "";
+                    erro_dificuldade.innerHTML = "";
+                    erro_teste.innerHTML = "";
+                    div_resultado.innerHTML = "";
+                    historico_dados.innerHTML = "";
+                    titulo_historico.innerHTML = "";
+                    let mensagem = "";
+                    let natureza_teste = "Padrão";
+
+                    let rolagem = 0;
+                    let resultado = 0;
+                    let maior = 0;
+                    let menor = 0;
+                    let soma = 0;
+                    let rolagens_feitas;
+                    let vantagem;
+                    let imagem;
+
+
+                    let selec_rolagem = rolagens_de_dados.value;
+                    let selec_teste = teste_select.value;
+                    let dados = Number(qtd_dados.value);
+                    let modificador_m = Number(modificador.value);
+                    let dificuldade_teste = Number(dificuldade.value);
+
+                    // Validações
+                    if (dados <= 0) {
+                        erro_qtd_dados.innerHTML = `<span style = "color:red"> A Quantidade de dados não pode ser zero nem negativa!</span>`
+                        return;
+                    }
+
+                    if (dificuldade_teste < 0) {
+                        erro_dificuldade.innerHTML = `<span style = "color:red"> A Dificuldade do teste não pode ser negativa!</span>`
+                        return;
+                    }
+                    if (selec_teste == 'padrao' && dados > 1) {
+                        erro_teste.innerHTML = `<span style = "color:red"> O teste está selecionado como Padrão, <br> porém mais de uma rolagem está sendo realizada, insira apenas uma rolagem. </span>`
+                        return;
+                    }
+                    if (selec_teste == 'vantagem_dado' && dados <= 1) {
+                        erro_teste.innerHTML = `<span style = "color:red"> O teste está selecionado como Vantagem, <br> porém somente um dado está sendo jogado, insira duas ou mais rolagens. </span>`
+                        return;
+                    }
+
+                    if (selec_teste == 'desvantagem_dado' && dados <= 1) {
+                        erro_teste.innerHTML = `<span style = "color:red"> O teste está selecionado como Desvantagem, <br> porém somente um dado está sendo jogado, insira duas ou mais rolagens. </span>`
+                        return;
+                    }
+
+                    if (selec_teste == 'soma_dado' && dados <= 1) {
+                        erro_teste.innerHTML = `<span style = "color:red"> O teste está selecionado como Soma, <br> porém somente um dado sendo jogado, insira duas ou mais rolagens. </span>`
+                        return;
+                    }
+
+                    function quantidade_dados(tipo_dado) {
+                        if (dados > 1) {
+
+                            for (let i = 0; i < dados; i++) {
+
+                                let rolagem_adicional = Math.floor((Math.random() * tipo_dado) + 1);
+
+                                rolagens_adicionais.push(rolagem_adicional)
+                                console.log('Array Rolagens: ' + rolagens_adicionais)
+
+
+
+                            }
+
+                        } else {
+                            let rolagem_padrao = Math.floor((Math.random() * tipo_dado) + 1);
+                            return rolagem_padrao;
+                        }
+
+                        return rolagens_adicionais;
+
+                    }
+
+
+                    // Pegando o Select do tipo de dado escolhido;
+                    if (selec_rolagem == 'd20') {
+                        rolagens_feitas = quantidade_dados(20);
+                        resultado = rolagens_feitas;
+                        imagem = `<img width = 50px height = 50px src ="/public/assets/img/d20.png"> <br>`
+                    } else if (selec_rolagem == 'd12') {
+                        rolagens_feitas = quantidade_dados(12);
+                        resultado = rolagens_feitas;
+                    } else if (selec_rolagem == 'd8') {
+                        rolagens_feitas = quantidade_dados(8);
+                        resultado = rolagens_feitas;
+                    } else if (selec_rolagem == 'd6') {
+                        rolagens_feitas = quantidade_dados(6);
+                        resultado = rolagens_feitas;
+                    } else if (selec_rolagem == 'd4') {
+                        rolagens_feitas = quantidade_dados(4);
+                        resultado = rolagens_feitas;
+                    }
+                    // Pegando Select do tipo do teste
+
+                    if (selec_teste == 'padrao') {
+                        console.log('Teste Padrão Sendo Realizado.')
+                        dados = 1;
+
+
+                    } else if (selec_teste == 'vantagem_dado') {
+
+                        maior = rolagens_feitas[0];
+
+                        for (let i = 0; i < rolagens_feitas.length; i++) {
+                            if (rolagens_feitas[i] > maior) {
+                                maior = rolagens_feitas[i];
+                            }
+                        }
+                        natureza_teste = "Com Vantagem";
+
+                        resultado = maior;
+
+                        console.log(maior);
+                        console.log('Teste com vantagem sendo realizado')
+
+                    } else if (selec_teste == 'desvantagem_dado') {
+                        menor = rolagens_feitas[0];
+
+                        for (let i = 0; i < rolagens_feitas.length; i++) {
+                            if (rolagens_feitas[i] < menor) {
+                                menor = rolagens_feitas[i]
+                            }
+                        }
+                        natureza_teste = "Com Desvantagem";
+
+                        resultado = menor;
+
+                        console.log('Teste com desvantagem sendo realizado')
+                    } else if (selec_teste == 'soma_dado') {
+
+                        for (let i = 0; i < rolagens_feitas.length; i++) {
+                            soma += rolagens_feitas[i];
+                        }
+                        natureza_teste = "Com Soma";
+
+                        resultado = soma;
+                    }
+
+
+
+
+                    console.log(vantagem);
+
+
+                    // Calculando modificador    
+                    if (modificador_m != 0) {
+                        resultado += modificador_m;
+                    }
+
+                    if (resultado < 0) {
+                        resultado = 1;
+                    }
+
+                    let vantagem_padrao = selec_teste == "vantagem_dado" ? maior : "";
+                    let desvantagem_padrao = selec_teste == "desvantagem_dado" ? menor : "";
+                    let soma_padrao = selec_teste == "soma_dado" ? soma : "";
+
+                    if (dificuldade_teste == "") {
+                        mensagem = "";
+                    } else if (resultado >= dificuldade_teste) {
+                        mensagem = `<span style = "color: #7CB621"> Sucesso! <br> Você passou no teste com diferença da DT igual a ${resultado - dificuldade_teste}. </span>`
+
+                        if (historico_rolagens.length == 10 && sucesso_ou_fracasso.length == 10) {
+                            historico_rolagens.shift();
+                            sucesso_ou_fracasso.shift();
+
+                        }
+
+                        historico_rolagens.push(resultado);
+                        sucesso_ou_fracasso.push("Sucesso");
+
+
+                    } else if (resultado <= dificuldade_teste) {
+                        mensagem = `<span style = "color: red; font-size: 32px"> Fracasso! <br> Você falhou no teste com diferença da DT igual a ${resultado - dificuldade_teste}. </span>`
+
+                        if (historico_rolagens.length == 10 && sucesso_ou_fracasso.length == 10) {
+                            historico_rolagens.shift();
+                            sucesso_ou_fracasso.shift();
+
+                        }
+
+                        historico_rolagens.push(resultado);
+                        sucesso_ou_fracasso.push("Fracasso");
+
+                    }
+
+                    let plural_singular_dados = dados > 1 ? "dados" : "dado";
+                    let plural_singular_dos = dados > 1 ? "dos" : "do";
+
+                    console.log(`Resultado Final: ${dados} X ${rolagens_feitas} + ${modificador_m} = ${resultado}`)
+
+                    resultado_rolagem.innerHTML = `Resultado ${plural_singular_dos} ${plural_singular_dados} <br> 
+                    <span style = "font-size: 25px; color: aquamarine"> ${rolagens_feitas} </span>`;
+                    resultado_modif.innerHTML = `Modificador  <br> 
+                    <span style = "font-size: 25px;  color: aquamarine"> ${modificador_m} </span>`;
+                    resultado_dif.innerHTML = `Dificuldade do Teste  <br> 
+                    <span style = "font-size: 25px; color: yellow"> ${dificuldade_teste} </span>`;
+
+
+
+                    div_resultado.innerHTML = `Resultados Finais <br> Em um teste ${natureza_teste} você obteve: <br>  ${dados}${selec_rolagem} | ${rolagens_feitas} + ${modificador_m} = ${resultado} <br> <span style = "font-size:32px"> ${mensagem}  </span>`
+
+                    console.log(historico_rolagens)
+                    console.log(sucesso_ou_fracasso);
+
+                }
+
+
+                function historico() {
+                    div_resultado.innerHTML = "";
+                    historico_dados.innerHTML = "";
+                    titulo_historico.innerHTML = "";
+                    let historico = "";
+
+                    historico_rolagens.forEach((valor, indice) => {
+
+                        let texto = sucesso_ou_fracasso[indice]
+                        let fracasso_sucesso = texto == "Sucesso" ? `<span style="color:green"> Sucesso </span> ` : `<span style= "color: red"> Fracasso </span> `
+
+
+                        historico += ` <br> ${valor} : ${fracasso_sucesso}  <br>`
+                    })
+                    titulo_historico.innerHTML = `<span> Histórico das últimas 10 rolagens (De cima para baixo, do mais antigo ao mais atual): </span>`
+                    historico_dados.innerHTML = historico;
+
+
+
+
+                }
+
+            </script>
